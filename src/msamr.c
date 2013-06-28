@@ -50,12 +50,12 @@ MS_PLUGIN_DECLARE(void) libmsamr_init(){
 		return;
 	}
 #endif
-        ms_filter_register(&amrnb_dec_desc);
+	ms_filter_register(&amrnb_dec_desc);
 	ms_filter_register(&amrnb_enc_desc);
 #endif
 #ifdef HAVE_AMRWB
-        ms_filter_register(&amrwb_dec_desc);
-        ms_filter_register(&amrwb_enc_desc);
+	ms_filter_register(&amrwb_dec_desc);
+	ms_filter_register(&amrwb_enc_desc);
 #endif
         
 	ms_message("libmsamr " VERSION " plugin loaded");

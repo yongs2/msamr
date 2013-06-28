@@ -70,10 +70,10 @@ if test x$enable_narrowband = xyes; then
 fi
 
 AC_ARG_ENABLE(wideband,
-AC_HELP_STRING([--enable-wideband],[Enable AMR wideband [default=no]]),
+AC_HELP_STRING([--enable-wideband],[Enable AMR wideband [default=yes]]),
 [enable_wideband=$enableval],
 [
-       enable_wideband=no
+       enable_wideband=yes
        BUILD_AMRWB=1
 ]
 )
