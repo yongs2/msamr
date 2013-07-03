@@ -353,7 +353,7 @@ static void enc_process(MSFilter *f)
 	int		nFbit = 1, nFTbits = 0, nQbit = 0;
 	int		nReserved = 0, nPadding = 0;
 	int		nFrameData = 0, framesz = 0, nWrite = 0;
-	int		offset = 0;
+	int		offset = 0, nAllocSize = 0;
 	
 	while ((im = ms_queue_get(f->inputs[0])) != NULL)
 	{
@@ -362,10 +362,13 @@ static void enc_process(MSFilter *f)
 	
 	while (ms_bufferizer_get_avail(s->bufferizer) >= buff_size)
 	{
-		mblk_t *om = allocb(OUT_MAX_SIZE * buff_size/unitary_buff_size + 1, 0);
+		nAllocSize = OUT_MAX_SIZE * buff_size / unitary_buff_size + 1;
+
+		mblk_t *om = allocb(nAllocSize, 0);
 		ms_bufferizer_read(s->bufferizer, (uint8_t*) buff, buff_size);
 		
-		payload = bs_new(om->b_wptr, OUT_MAX_SIZE * buff_size / unitary_buff_size + 1);
+		memset(om->b_wptr, 0, nAllocSize);
+		payload = bs_new(om->b_wptr, nAllocSize);
 		if(s->b_octet_align == 0)
 		{	// Bandwidth efficient mode
 			// 1111 ; CMR (4 bits)
